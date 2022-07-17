@@ -1,4 +1,4 @@
-package rodrigorenck.com.github.sevendaysofcode;
+package rodrigorenck.com.github.sevendaysofcode.dayTwo;
 
 import java.io.IOException;
 import java.net.URI;
@@ -12,7 +12,7 @@ import java.util.List;
 import java.util.regex.Matcher;
 
 /**
- * Day 1
+ * Day 2
  * Criar uma lista para cada atributo do filme
  * Atributos: id, rank, title, fullTitle, year, image, crew, imDbRating, imDbRatingCOunt
  */

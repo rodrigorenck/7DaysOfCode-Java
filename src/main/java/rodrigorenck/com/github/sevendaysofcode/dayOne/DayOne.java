@@ -1,4 +1,4 @@
-package rodrigorenck.com.github.sevendaysofcode;
+package rodrigorenck.com.github.sevendaysofcode.dayOne;
 
 import java.io.IOException;
 import java.net.URI;
