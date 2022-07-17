@@ -16,10 +16,9 @@ import java.util.Arrays;
  * Imprimir o corpo da resposta no console
  */
 
-public class Main {
+public class DayOne {
 
     public static void main(String[] args) throws URISyntaxException, IOException, InterruptedException {
-        long inicio = System.currentTimeMillis();
 
         HttpClient client = HttpClient
                 .newBuilder()
@@ -31,19 +30,15 @@ public class Main {
                 .GET()
                 .build();
 
-        HttpResponse response = client.send(request, HttpResponse.BodyHandlers.ofString());
+        HttpResponse<String> response = client.send(request, HttpResponse.BodyHandlers.ofString());
 
 
-        String body = (String) response.body();
-        String[] split = body.split("}");
+        String jsonBody = response.body();
+        String[] filmes = jsonBody.split("}");
         //criamos uma lista dos 250 filmes
-        ArrayList<String> listFilmes = new ArrayList<>(Arrays.asList(split));
+        ArrayList<String> listFilmes = new ArrayList<>(Arrays.asList(filmes));
 
         listFilmes.forEach(System.out::println);
-
-        long fim = System.currentTimeMillis();
-        System.out.println();
-        System.out.println("Tempo de execucao em segundos: " + (fim - inicio)/1000.0);
 
 
     }
