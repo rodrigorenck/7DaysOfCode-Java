@@ -1,23 +1,22 @@
-package rodrigorenck.com.github.sevendaysofcode.dayTwo;
+package rodrigorenck.com.github.sevendaysofcode.dayFour;
 
-import java.io.IOException;
+import java.io.PrintWriter;
 import java.net.URI;
-import java.net.URISyntaxException;
 import java.net.http.HttpClient;
 import java.net.http.HttpRequest;
 import java.net.http.HttpResponse;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
-import java.util.regex.Matcher;
+import java.util.stream.Collectors;
 
 /**
- * Day 2
- * Criar uma lista para cada atributo do filme
- * Atributos: id, rank, title, fullTitle, year, image, crew, imDbRating, imDbRatingCOunt
+ * Day 4
+ * Gerar uma pagina HTML a partir da lista de objetos que voce ja tem no seu codigo Java
+ * Criar a classe HTMLGenerator
  */
 
-public class DayTwo {
+public class DayFour {
     private static String regex;
     private static List<String> listaFilmes;
 
@@ -25,40 +24,24 @@ public class DayTwo {
         //Inicializando
         String jsonBody = generateJson();
         String[] filmes = jsonBody.split("}");
-        listaFilmes = arrumaPrimeiroElementoLista(filmes);
+        listaFilmes = fixList(filmes);
         regex = "\"" + "," + "\"";
 
-        //Criando uma lista para cada atributo - id, rank, title, year, urlImage, rating
-        List<String> ids = parseId();
-        List<String> ranks = parseRank();
-        List<String> titles = parseTitle();
-        List<String> years = parseYear();
-        List<String> urlImages = parseUrlImages();
-        List<String> ratings = parseRating();
+        List<Movie> movieList = createMovieList();
 
-        List<List<String>> listaDeAtributos = new ArrayList<>(Arrays.asList(ids, ranks, titles, years, urlImages, ratings));
-
-        //para verificar que todas as listas possuem o mesmo tamanho
-        listaDeAtributos.forEach(list -> {
-            System.out.println(list.size());
-        });
-
-        //para verificar que os atributos do primeiro filme estao corretos
-        String primeiro = ids.get(0) + " " + ranks.get(0) + " " + titles.get(0) + " " + ratings.get(0);
-        System.out.println(primeiro);
+        PrintWriter writer = new PrintWriter("content.html");
+        new HTMLGenerator(writer).generate(movieList);
+        writer.close();
     }
 
-
-    private static List<String> parseId(){
-        List<String> listId = new ArrayList<>();
-        loopTheList(0, 9, listId);
-        return listId;
-    }
-
-    private static List<String> parseRank(){
-        List<String> listRank = new ArrayList<>();
-        loopTheList(1, 7, listRank);
-        return listRank;
+    //metodo para criar nossa lista de objetos Movie
+    private static List<Movie> createMovieList(){
+        List<Movie> movieList = new ArrayList<>();
+        for(int i = 0; i<listaFilmes.size(); i++){
+            Movie movie = new Movie(parseTitle().get(i), parseUrlImages().get(i), parseRating().get(i), parseYear().get(i));
+            movieList.add(movie);
+        }
+        return movieList;
     }
 
     private static List<String> parseTitle(){
@@ -94,29 +77,20 @@ public class DayTwo {
             list.add(isolaAtributo);
         }
     }
-
-
-
     //metodo que retorna o corpo do json em String
     private static String generateJson() throws Exception{
-        HttpClient client = HttpClient
-                .newBuilder()
-                .build();
+        HttpClient client = HttpClient.newBuilder().build();
 
-        HttpRequest request = HttpRequest
-                .newBuilder()
-                .uri(new URI("https://imdb-api.com/en/API/Top250Movies/k_f24d3ik6"))
-                .GET()
-                .build();
+        HttpRequest request = HttpRequest.newBuilder()
+                .uri(new URI("https://imdb-api.com/en/API/Top250Movies/k_f24d3ik6")).GET().build();
 
         HttpResponse<String> response = client.send(request, HttpResponse.BodyHandlers.ofString());
-
         return response.body();
     }
 
     //metodo para remover o "items" do primeiro elemento e remover o "error" que eh o ultimo elemento
     //deixa nossa lista apenas com os 250 filmes - mais consistente
-    private static List<String> arrumaPrimeiroElementoLista(String[] listaOriginal){
+    private static List<String> fixList(String[] listaOriginal){
         listaFilmes = new ArrayList<>(Arrays.asList(listaOriginal));
 
         listaFilmes.remove(listaFilmes.size()-1);

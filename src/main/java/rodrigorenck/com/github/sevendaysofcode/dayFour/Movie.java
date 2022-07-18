@@ -1,12 +1,12 @@
-package rodrigorenck.com.github.sevendaysofcode.dayThree;
+package rodrigorenck.com.github.sevendaysofcode.dayFour;
 
 public class Movie {
     private String title;
     private String urlImage;
-    private double rating;
-    private int year;
+    private String rating;
+    private String year;
 
-    public Movie(String title, String urlImage, double rating, int year) {
+    public Movie(String title, String urlImage, String rating, String year) {
         this.title = title;
         this.urlImage = urlImage;
         this.rating = rating;
@@ -28,11 +28,11 @@ public class Movie {
         return urlImage;
     }
 
-    public double getRating() {
+    public String getRating() {
         return rating;
     }
 
-    public int getYear() {
+    public String getYear() {
         return year;
     }
 }
