@@ -1,4 +1,4 @@
-package rodrigorenck.com.github.sevendaysofcode.dayFour;
+package rodrigorenck.com.github.sevendaysofcode;
 
 public class Movie {
     private String title;
