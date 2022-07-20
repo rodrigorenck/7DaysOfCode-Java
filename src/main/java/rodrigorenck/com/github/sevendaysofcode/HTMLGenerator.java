@@ -38,7 +38,7 @@ public class HTMLGenerator {
                     	</div>
                     </div>
                     """;
-            writer.println(String.format(div, movie.getTitle(), movie.getUrlImage(), movie.getTitle(), movie.getRating(), movie.getYear()));
+            writer.println(String.format(div, movie.title(), movie.urlImage(), movie.title(), movie.rating(), movie.year()));
         }
 
         writer.println(

@@ -1,4 +1,4 @@
-package rodrigorenck.com.github.sevendaysofcode;
+package rodrigorenck.com.github.sevendaysofcode.imdb;
 
 import java.net.URI;
 import java.net.http.HttpClient;

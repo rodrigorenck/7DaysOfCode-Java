@@ -1,6 +1,6 @@
 package rodrigorenck.com.github.sevendaysofcode;
 
-public class Movie {
+public class Movie implements Content{
     private String title;
     private String urlImage;
     private String rating;
@@ -20,19 +20,19 @@ public class Movie {
         return format;
     }
 
-    public String getTitle() {
+    public String title() {
         return title;
     }
 
-    public String getUrlImage() {
+    public String urlImage() {
         return urlImage;
     }
 
-    public String getRating() {
+    public String rating() {
         return rating;
     }
 
-    public String getYear() {
+    public String year() {
         return year;
     }
 }

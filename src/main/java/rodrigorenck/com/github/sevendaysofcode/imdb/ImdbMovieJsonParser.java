@@ -1,10 +1,13 @@
-package rodrigorenck.com.github.sevendaysofcode;
+package rodrigorenck.com.github.sevendaysofcode.imdb;
+
+import rodrigorenck.com.github.sevendaysofcode.JsonParser;
+import rodrigorenck.com.github.sevendaysofcode.Movie;
 
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-public class ImdbMovieJsonParser {
+public class ImdbMovieJsonParser implements JsonParser {
 
     //not the real key
     private static String apiKey = "<your apiKey>";
@@ -13,11 +16,16 @@ public class ImdbMovieJsonParser {
     private static String regex = "\"" + "," + "\"";
 
     //method that creates the movie List
-    public static List<Movie> parse() throws Exception {
-        String body = ImdbApiClient.generateJson(apiKey);
-        String[] movies = body.split("}");
-        movieListString = fixList(movies);
-        return createMovieList();
+    public List<Movie> parse(){
+        try{
+            String body = ImdbApiClient.generateJson(apiKey);
+            String[] movies = body.split("}");
+            movieListString = fixList(movies);
+            return createMovieList();
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+        return null;
     }
 
     //metodo para remover o "items" do primeiro elemento e remover o "error" que eh o ultimo elemento
