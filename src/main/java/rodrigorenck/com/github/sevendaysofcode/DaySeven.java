@@ -4,15 +4,16 @@ import rodrigorenck.com.github.sevendaysofcode.imdb.ImdbApiClient;
 import rodrigorenck.com.github.sevendaysofcode.imdb.ImdbMovieJsonParser;
 
 import java.io.PrintWriter;
+import java.util.Comparator;
 import java.util.List;
 
 /**
- * Day 6
- * Deixar o codigo mais generico para que ele possa receber dados de outras APIs
- * Criar duas abstracoes -> Content e JsonParser
+ * Day 7
+ * Implementar o comparable na classe Movie
+ * Comparar pelo Rating
  */
 
-public class DaySix {
+public class DaySeven {
 
     public static void main(String[] args) throws Exception {
         String apiKey = "<sua chave>";
@@ -21,6 +22,7 @@ public class DaySix {
         //2- Parsear o Json
         ImdbMovieJsonParser jsonParser = new ImdbMovieJsonParser();
         List<Movie> movieList = jsonParser.parse();
+        movieList.sort(Comparator.naturalOrder());
         //3- Gerar o HTML
         PrintWriter writer = new PrintWriter("content.html");
         new HTMLGenerator(writer).generate(movieList);
